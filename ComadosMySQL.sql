@@ -53,3 +53,13 @@ BY pass123
 
 SELECT *
 FROM produtos;
+
+CREATE TABLE comentarios(
+    comentario_id int AUTO_INCREMENT PRIMARY KEY,
+    nome varchar(100),
+    msg varchar(300),
+    data datetime default now()
+);
+
+SELECT *
+FROM comentarios;

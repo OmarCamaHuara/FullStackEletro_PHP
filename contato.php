@@ -9,6 +9,14 @@
     if(!$conn){
         die("A conexao ao DB falhou: ".mysqli_connect_error());
     }
+
+    if(isset($_POST['nome']) && isset($_POST['msg'])){
+        $nome = $_POST['nome'];
+        $msg = $_POST['msg'];
+
+        $sql = "insert into comentarios (nome, msg) values ('$nome', '$msg')";
+        $result = $conn->query($sql);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -44,17 +52,36 @@
 
     
     <section class="formulario">
-        <form class="box-formulario">
+        <form class="box-formulario" method="post" action="">
 
             <h4>Nome:</h4>
-            <input type="text" style="width: 400px" >
+            <input type="text" name="nome" style="width: 400px" >
 
             <h4>Mensagem:</h4>
-            <textarea name="" id="" cols="30" rows="10" style="width:400px"></textarea>
+            <textarea name="msg" id="" cols="30" rows="10" style="width:400px"></textarea>
 
-            <input type="submit" value="Enviar">
+            <input type="submit" name="submit" value="Enviar">
         </form>
     </section>
+        <h2>Comentarios</h2>
+        <section class="comen">
+
+             <?php
+                $sql = "select * from comentarios";
+                $result = $conn->query($sql);
+
+                if($result->num_rows > 0){
+                    while($rows = $result->fetch_assoc()){
+                        echo "Data: ", $rows['data'], "<br>";
+                        echo "Data: ", $rows['nome'], "<br>";
+                        echo "Data: ", $rows['msg'], "<br>"; 
+                        echo "<hr>";
+                }
+                }else{
+                    echo "Nenhum comentario ainda!";
+                }  
+            ?> 
+        </section>
     <!--Fin do Corpo--> 
     
     <br><br><br><br><br>
